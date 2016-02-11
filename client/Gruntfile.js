@@ -108,7 +108,7 @@ module.exports = function (grunt) {
               '/app/styles',
               connect.static('./app/styles')
             ));
-            
+
             middlewares.push(connect.static(appConfig.app));
 
             return middlewares;
