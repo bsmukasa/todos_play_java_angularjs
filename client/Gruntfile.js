@@ -98,15 +98,17 @@ module.exports = function (grunt) {
 
             // Serve static files
             middlewares.push(connect.static('.tmp'));
+
             middlewares.push(connect().use(
-              'bower_components',
+              '/bower_components',
               connect.static('./bower_components')
             ));
+
             middlewares.push(connect().use(
-              'app/styles',
+              '/app/styles',
               connect.static('./app/styles')
             ));
-
+            
             middlewares.push(connect.static(appConfig.app));
 
             return middlewares;
