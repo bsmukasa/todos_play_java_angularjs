@@ -1,15 +1,8 @@
 'use strict';
 
-/**
- * @ngdoc service
- * @name clientApp.authentication
- * @description
- * # authentication
- * Service in the clientApp.
- */
 angular
   .module('clientApp')
-  .factory('AuthenticationService', Service);
+  .factory('AuthenticationService', AuthenticationService);
 
   AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout']
   function AuthenticationService($http, $query, $cookieStore, $rootScope, $timeout) {
@@ -86,6 +79,3 @@ angular
       return $query.reject(result.data);
     }
   }
-  //.service('authentication', function () {
-  //  // AngularJS will instantiate a singleton by calling "new" on this function
-  //});
