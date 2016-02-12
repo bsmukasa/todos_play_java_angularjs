@@ -1,19 +1,24 @@
-'use strict';
+/* global angular */
+/*jshint latedef: nofunc */
 
-angular
-  .module('clientApp')
-  .controller('MainCtrl', MainCtrl);
+(function () {
+  'use strict';
 
-function MainController(AuthenticationService) {
-  var vm = this;
+  angular
+    .module('clientApp')
+    .controller('MainCtrl', MainCtrl);
 
-  vm.user = null;
+  function MainCtrl(AuthenticationService) {
+    var vm = this;
 
-  initController();
+    vm.user = null;
 
-  function initController() {
-    AuthenticationService.GetCurrent().then(function (user) {
-      vm.user = user;
-    });
+    initController();
+
+    function initController() {
+      AuthenticationService.GetCurrent().then(function (user) {
+        vm.user = user;
+      });
+    }
   }
-}
+})();

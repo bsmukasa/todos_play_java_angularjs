@@ -1,29 +1,35 @@
-'use strict';
+/* global angular */
+/*jshint latedef: nofunc */
 
-angular
-  .module('clientApp')
-  .controller('LoginCtrl', LoginCtrl);
+(function () {
+  'use strict';
 
-LoginCtrl.$inject = ['$location', 'AuthenticationService', 'AlertService'];
-function LoginCtrl($location, AuthenticationService, AlertService) {
-  var vm = this;
+  angular
+    .module('clientApp')
+    .controller('LoginCtrl', LoginCtrl);
 
-  vm.login = login;
+  LoginCtrl.$inject = ['$location', 'AuthenticationService', 'FlashService'];
 
-  (function initController() {
-    AuthenticationService.ClearCookieCredentials();
-  })();
+  function LoginCtrl($location, AuthenticationService, FlashService) {
+    var vm = this;
 
-  function login() {
-    vm.dataLoading = true;
-    AuthenticationService.Login(vm.username, vm.password, function (response) {
-      if (response.success) {
-        AuthenticationService.SetCookieCredentials(vm.username, vm.password);
-        $location.path('/');
-      } else {
-        AlertService.Error(response.message);
-        vm.dataLoading = false;
-      }
-    });
+    vm.login = login;
+
+    (function initController() {
+      AuthenticationService.ClearCookieCredentials();
+    })();
+
+    function login() {
+      vm.dataLoading = true;
+      AuthenticationService.Login(vm.username, vm.password, function (response) {
+        if (response.success) {
+          AuthenticationService.SetCookieCredentials(vm.username, vm.password);
+          $location.path('/');
+        } else {
+          FlashService.Error(response.message);
+          vm.dataLoading = false;
+        }
+      });
+    }
   }
-}
+})();

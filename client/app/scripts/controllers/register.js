@@ -1,11 +1,14 @@
+/* global angular */
+/*jshint latedef: nofunc */
+
 'use strict';
 
 angular
   .module('clientApp')
   .controller('RegisterCtrl', RegisterCtrl);
 
-RegisterController.$inject = ['AuthenticationService', '$location', '$rootScope', 'AlertService'];
-function RegisterController(AuthenticationService, $location, $rootScope, AlertService) {
+RegisterCtrl.$inject = ['AuthenticationService', '$location', '$rootScope', 'FlashService'];
+function RegisterCtrl(AuthenticationService, $location, $rootScope, FlashService) {
   var vm = this;
 
   vm.register = register;
@@ -15,10 +18,10 @@ function RegisterController(AuthenticationService, $location, $rootScope, AlertS
     AuthenticationService.Create(vm.user)
       .then(function (response) {
         if (response.success) {
-          AlertService.Success('Registration successful', true);
+          FlashService.Success('Registration successful', true);
           $location.path('/login');
         } else {
-          AlertService.Error(response.message);
+          FlashService.Error(response.message);
           vm.dataLoading = false;
         }
       });
