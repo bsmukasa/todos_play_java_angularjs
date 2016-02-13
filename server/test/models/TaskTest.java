@@ -1,6 +1,5 @@
 package models;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -8,44 +7,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class TaskTest extends BaseModelTest {
-//    @BeforeClass
-//    public static void startClass() {
-//        User ben = User.find.where().eq("email", "ben@fakemail.com").findUnique();
-//        User alicia = User.find.where().eq("email", "alicia@fakemail.com").findUnique();
-//        User jennifer = User.find.where().eq("email", "jennifer@fakemail.com").findUnique();
-//
-//        Task task1 = new Task();
-//        task1.title = "Test Task1";
-//        task1.owner = ben;
-//        task1.toggleIsDone();
-//        task1.save();
-//
-//        Task task2 = new Task();
-//        task2.title = "Test Task2";
-//        task2.owner = alicia;
-//        task2.save();
-//
-//        Task task3 = new Task();
-//        task3.title = "isDone Test 1";
-//        task3.owner = jennifer;
-//        task3.save();
-//
-//        Task task4 = new Task();
-//        task4.title = "Test Task4";
-//        task4.owner = ben;
-//        task4.save();
-//
-//        Task task5 = new Task();
-//        task5.title = "Test Task5";
-//        task5.owner = ben;
-//        task5.save();
-//
-//        Task task6 = new Task();
-//        task6.title = "isDone Test 2";
-//        task6.owner = alicia;
-//        task6.save();
-//    }
-
     @Test
     public void createAndRetrieveTask() {
         User user = new User();
