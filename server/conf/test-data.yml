@@ -1,0 +1,68 @@
+# Users
+
+---
+- !!models.User
+  &tony
+  email: ben@fakemail.com
+  firstName:  Ben
+  lastName:   Mukasa
+  password:   secret
+
+- !!models.User
+  &jennifer
+  email:      jennifer@fakemail.com
+  password:   secret
+  firstName:  Jennifer
+  lastName:   Mukasa
+
+- !!models.User
+  &alicia
+  email:      alicia@fakemail.com
+  password:   secret
+  firstName:  Alicia
+  lastName:   Mukasa
+
+- !!models.User
+  &charles
+  email:      charles@fakemail.com
+  password:   secret
+  firstName:  Charles
+  lastName:   Mukasa
+
+# Tasks
+
+- !!models.Task
+  title:      Fix the documentation
+  isDone:     true
+  owner:      *tony
+
+- !!models.Task
+  title:      Prepare the beta release
+  isDone:     false
+  owner:      *alicia
+
+- !!models.Task
+  title:      isDone Test 1
+  isDone:     false
+  owner:      *jennifer
+
+- !!models.Task
+  title:      Start angularjs tutorial
+  isDone:     false
+  owner:      *tony
+
+- !!models.Task
+  title:      Finish zentask integration
+  isDone:     false
+  owner:      *tony
+
+- !!models.Task
+  title:      isDone Test 2
+  isDone:     false
+  owner:      *alicia
+
+#-   !!models.Task
+#    title:      Finish zentask integration
+#    done:       true
+#    dueDate:    2011-11-15
+#    owner:      *alicia
