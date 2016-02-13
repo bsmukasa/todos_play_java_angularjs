@@ -1,9 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -30,6 +32,10 @@ public class User extends Model {
     @Column(length = 255, nullable = false)
     @Constraints.Required
     public String lastName;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnore
+    public List<Task> tasks;
 
 //    public void setPassword(String password) {
 //        this.shaPassword = getSha512(password);
