@@ -15,6 +15,7 @@ GET     /api/v1/users/:id               controllers.Users.getByID(id: Long)
 
 
 GET     /api/v1/todos                   controllers.Tasks.list()
+GET     /api/v1/todos/complete          controllers.Tasks.completeList()
 GET     /api/v1/todos/:id               controllers.Tasks.getByID(id: Long)
 PUT     /api/v1/todos/:id               controllers.Tasks.update(id: Long)
 DELETE  /api/v1/todos/:id               controllers.Tasks.delete(id: Long)
