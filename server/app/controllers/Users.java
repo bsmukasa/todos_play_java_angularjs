@@ -27,12 +27,12 @@ public class Users extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result create() {
-        JsonNode jsonUser = request().body().asJson();
+        JsonNode jsonRequest = request().body().asJson();
         User user = new User();
-        user.email = jsonUser.findPath("email").textValue();
-        user.password = jsonUser.findPath("password").textValue();
-        user.firstName = jsonUser.findPath("firstName").textValue();
-        user.lastName = jsonUser.findPath("lastName").textValue();
+        user.email = jsonRequest.findPath("email").textValue();
+        user.password = jsonRequest.findPath("password").textValue();
+        user.firstName = jsonRequest.findPath("firstName").textValue();
+        user.lastName = jsonRequest.findPath("lastName").textValue();
         user.save();
 
         ObjectNode response = Json.newObject();
@@ -43,9 +43,9 @@ public class Users extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result authenticate() {
-        JsonNode jsonUser = request().body().asJson();
-        String email = jsonUser.findPath("email").textValue();
-        String password = jsonUser.findPath("password").textValue();
+        JsonNode jsonRequest = request().body().asJson();
+        String email = jsonRequest.findPath("email").textValue();
+        String password = jsonRequest.findPath("password").textValue();
         User user = User.authenticate(email, password);
 
         ObjectNode response = Json.newObject();
