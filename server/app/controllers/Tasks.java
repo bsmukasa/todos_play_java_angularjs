@@ -8,13 +8,15 @@ import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import java.util.List;
 
 public class Tasks extends Controller {
 
+    @Security.Authenticated(Secured.class)
     public Result list() {
-        List<Task> taskList = Task.find.all(); // TODO make sure list is of the current user
+        List<Task> taskList = Task.findIncompleteByUserEmail(session().get("userEmail"));
 
         ObjectNode response = Json.newObject();
         if (taskList == null) {
@@ -28,6 +30,23 @@ public class Tasks extends Controller {
         }
     }
 
+    @Security.Authenticated(Secured.class)
+    public Result completelist() {
+        List<Task> taskList = Task.findAllByUserEmail(session().get("userEmail"));
+
+        ObjectNode response = Json.newObject();
+        if (taskList != null) {
+            JsonNode jsonTaskList = Json.toJson(taskList);
+            response = Json.newObject();
+            response.set("todosList", jsonTaskList);
+            return ok(response);
+        } else {
+            response.put("message", "User does not have any todos.");
+            return notFound(response);
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
     public Result getByID(Long id) {
         Task task = Task.find.byId(id);
 
@@ -44,6 +63,7 @@ public class Tasks extends Controller {
     }
 
     // TODO Think about validation for add
+    @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.Json.class)
     public Result add() {
         JsonNode jsonRequest = request().body().asJson();
@@ -68,6 +88,7 @@ public class Tasks extends Controller {
     }
 
     // TODO Think about validation for update
+    @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.Json.class)
     public Result update(Long id) {
         Task task = Task.find.byId(id);
@@ -86,6 +107,7 @@ public class Tasks extends Controller {
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public Result delete(Long id) {
         Task task = Task.find.byId(id);
 
@@ -101,6 +123,7 @@ public class Tasks extends Controller {
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public Result toggleDone(Long id) {
         Task task = Task.find.byId(id);
 
