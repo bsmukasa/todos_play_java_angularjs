@@ -5,7 +5,18 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-POST    /app/signup                 controllers.Application.signup()
+GET     /api/v1/users/:id           controllers.Users.getByID(id: Long)
+GET     /api/v1/users/:username     controllers.Users.getByUsername(username)
+GET     /api/v1/users/current       controllers.Users.getCurrent()
+POST    /api/v1/users               controllers.Users.create()
+POST    /api/v1/authenticate        controllers.Users.authenticate()
+
+GET     /api/v1/todos               controllers.Tasks.list()
+GET     /api/v1/todos/:id           controllers.Tasks.getByID(id: Long)
+PUT     /api/v1/todos/:id           controllers.Tasks.update(id: Long)
+DELETE  /api/v1/todos/:id           controllers.Tasks.delete(id: Long)
+POST    /api/v1/todos               controllers.Tasks.add()
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
