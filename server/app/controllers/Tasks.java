@@ -31,7 +31,7 @@ public class Tasks extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result completelist() {
+    public Result completeList() {
         List<Task> taskList = Task.findAllByUserEmail(session().get("userEmail"));
 
         ObjectNode response = Json.newObject();
