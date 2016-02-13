@@ -10,16 +10,29 @@ import play.mvc.Result;
 
 public class Users extends Controller {
     public Result getCurrent() {
-        return play.mvc.Results.TODO;
+        String email = session().get("userEmail");
+
+        ObjectNode response = Json.newObject();
+        if (email == null) {
+            response.put("message", "No user is logged in.");
+            return unauthorized();
+        } else {
+            User user = User.findByEmail(email);
+            JsonNode jsonUser = Json.toJson(user);
+            response.set("user", jsonUser);
+            return ok(response);
+        }
     }
 
     public Result getByID(Long id) {
         User user = User.find.byId(id);
+
+        ObjectNode response = Json.newObject();
         if (user == null) {
-            return notFound();
+            response.put("message", "User id does not exist.");
+            return notFound(response);
         } else {
             JsonNode jsonUser = Json.toJson(user);
-            ObjectNode response = Json.newObject();
             response.set("user", jsonUser);
             return ok(response);
         }
@@ -35,6 +48,9 @@ public class Users extends Controller {
         user.lastName = jsonRequest.findPath("lastName").textValue();
         user.save();
 
+        session().clear();
+        session("userEmail", user.email);
+
         ObjectNode response = Json.newObject();
         response.put("message", "User created.");
 
@@ -42,7 +58,7 @@ public class Users extends Controller {
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public Result authenticate() {
+    public Result login() {
         JsonNode jsonRequest = request().body().asJson();
         String email = jsonRequest.findPath("email").textValue();
         String password = jsonRequest.findPath("password").textValue();
@@ -50,13 +66,34 @@ public class Users extends Controller {
 
         ObjectNode response = Json.newObject();
         if (user == null) {
-            response.put("message", "Email and Password combination does not exist.");
-            return unauthorized(response);
+            response.put("message", "Incorrect email or password.");
+            return badRequest(response);
         } else {
+            session().clear();
+            session("UserEmail", user.email);
             response.put("message", "User authenticated.");
             return ok(response);
         }
 
+    }
+
+    public Result logout() {
+        session().clear();
+
+        ObjectNode response = Json.newObject();
+        response.put("message", "Logged Out.");
+        return ok(response);
+    }
+
+    public Result isAuthenticated() {
+        if (session().get("userEmail") == null) {
+            return unauthorized();
+        } else {
+            ObjectNode response = Json.newObject();
+            response.put("message", "User already logged in.");
+            response.put("user", session().get("userEmail"));
+            return ok(response);
+        }
     }
 
 //    @BodyParser.Of(BodyParser.Json.class)
